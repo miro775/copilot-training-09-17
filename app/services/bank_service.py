@@ -110,3 +110,46 @@ class AtmBankService(BankService):
         Withdraw money at the bank branch
         """
         raise NotImplementedError("Branch withdrawals are not supported by AtmBankBankService.")
+    
+class OnlineBankService(BankService):
+    def __init__(self, account_service: AccountService, amount_validator: AmountValidator):
+        self.account_service = account_service
+        self.amount_validator = amount_validator
+
+    def deposit_money_at_atm(self, account_id: int, amount: int) -> None:
+        """
+        Deposit money at the ATM
+        """
+        raise NotImplementedError("ATM deposits are not supported by OnlineBankService.")
+
+    def deposit_money_at_branch(self, account_id: int, amount: int) -> None:
+        """
+        Deposit money at the bank branch
+        """
+        raise NotImplementedError("Branch deposits are not supported by OnlineBankService.")
+
+    def make_transfer_at_branch(self, from_account_id: int, to_account_id: int, amount: int) -> None:
+        """
+        Make a transfer at the bank branch
+        """
+        self.amount_validator.validate(amount)
+        self.account_service.transfer_money(from_account_id, to_account_id, amount)
+
+    def withdraw_money_at_atm(self, account_id: int, amount: int) -> None:
+        """
+        Withdraw money at the ATM
+        """
+        raise NotImplementedError("ATM withdrawals are not supported by OnlineBankService.")
+
+    def withdraw_money_at_branch(self, account_id: int, amount: int) -> None:
+        """
+        Withdraw money at the bank branch
+        """
+        raise NotImplementedError("Branch withdrawals are not supported by OnlineBankService.")
+    
+    def make_transfer_online(self, from_account_id: int, to_account_id: int, amount: int) -> None:
+        """
+        Make a transfer online
+        """
+        self.amount_validator.validate(amount)
+        self.account_service.transfer_money(from_account_id, to_account_id, amount)
